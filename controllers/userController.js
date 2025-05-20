@@ -17,6 +17,24 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
+exports.getUserbyEmpId = async (req, res) => {
+  const {empId } = req.params;
+  try {
+    const user = await getUserModel().findOne({ where: { empId } });
+      return res.status(201).json({
+        success: true,
+        message: "User retrieved successfully",
+        data: user,
+      });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      success: false,
+      message: "Error retrieving user",
+    });
+  }
+};
+
 exports.createUsers = async (req, res) => {
   const { name, email, designation, empId } = req.body;
   try {
